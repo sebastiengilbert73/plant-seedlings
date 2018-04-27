@@ -120,3 +120,4 @@ for epoch in range(1, args.numberOfEpochs + 1):
     validationOutput = neuralNet(validationImagesTensor)
     validationLoss = lossFunction(validationOutput, validationLabelsTensor)
     print("\nEpoch {}: Average train loss = {}; validationLoss = {}".format(epoch, averageTrainLoss, validationLoss.data[0]))
+    torch.save(neuralNet.state_dict(), os.path.join('./', args.architecture + '_valLoss' + str(validationLoss.data[0]) ) )
