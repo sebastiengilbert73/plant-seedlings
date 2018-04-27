@@ -26,15 +26,12 @@ args = parser.parse_args()
 args.cuda = not args.disable_cuda and torch.cuda.is_available()
 
 imageSize = ast.literal_eval(args.imageSize)
-print ("imageSize =", imageSize)
 
 loader = Loader.Importer(args.baseDirectory, args.numberOfTrainingImages + args.numberOfValidationImages)
 trainFilepathToClassDic, validationFilepathToClassDic = loader.SplitForTrainAndValidation(args.numberOfTrainingImages, args.numberOfValidationImages)
 trainFilepaths = [*trainFilepathToClassDic]
 validationFilepaths = [*validationFilepathToClassDic]
 print ("len(trainFilepaths) = {}; len(validationFilepaths) = {}".format(len(trainFilepaths), len(validationFilepaths)))
-#trainImagesTensor, trainLabelsTensor = loader.ConvertToTensors(trainFilepathToClassDic, imageSize)
-
 
 # Create a neural network and an optimizer
 if args.architecture == 'ConvStack_3_3_32_7_2_32_7_2_32_7_2_12_256_0.5':
