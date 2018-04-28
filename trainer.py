@@ -51,7 +51,7 @@ elif args.architecture == 'ConvStack_3_3_32_7_2_32_7_2_32_7_2_12_128_0.5' or \
     imageSize = (128, 128)
     # Create an optimizer
     optimizer = torch.optim.SGD(neuralNet.parameters(), lr=args.learningRate, momentum=args.momentum)
-e
+
 else:
     raise NotImplementedError("trainer.py: Unsupported architecture '{}'".format(args.architecture))
 
