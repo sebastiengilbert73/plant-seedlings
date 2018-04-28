@@ -42,7 +42,8 @@ if args.architecture == 'ConvStack_3_3_32_7_2_32_7_2_32_7_2_12_256_0.5':
     imageSize = (256, 256)
     # Create an optimizer
     optimizer = torch.optim.SGD(neuralNet.parameters(), lr=args.learningRate, momentum=args.momentum)
-elif args.architecture == 'ConvStack_3_3_32_7_2_32_7_2_32_7_2_12_128_0.5':
+elif args.architecture == 'ConvStack_3_3_32_7_2_32_7_2_32_7_2_12_128_0.5' or \
+    args.architecture == 'ConvStack_3_3_32_7_2_32_7_2_32_7_2_12_128_0.75':
     structureElements = ConvStackClassifier.ExtractStructureFromFilename(args.architecture)
     neuralNet = ConvStackClassifier.NeuralNet(structureElements[2], structureElements[0],
                                               structureElements[3], structureElements[4],
@@ -50,6 +51,7 @@ elif args.architecture == 'ConvStack_3_3_32_7_2_32_7_2_32_7_2_12_128_0.5':
     imageSize = (128, 128)
     # Create an optimizer
     optimizer = torch.optim.SGD(neuralNet.parameters(), lr=args.learningRate, momentum=args.momentum)
+e
 else:
     raise NotImplementedError("trainer.py: Unsupported architecture '{}'".format(args.architecture))
 
