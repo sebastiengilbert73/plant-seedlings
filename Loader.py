@@ -41,6 +41,9 @@ class Importer:
                 return classNdx
         raise Exception("Importer.ClassIndex(): Class name {} was not found in the list".format(className))
 
+    def ClassName(self, classNdx):
+        return self.classNames[classNdx]
+
     def FilepathToClassDic(self):
         return self.filepathToClassDic
 
@@ -65,15 +68,19 @@ class Importer:
             validationFilepathToClassDic[filepath] = self.filepathToClassDic[filepath]
         return trainFilepathToClassDic, validationFilepathToClassDic
 
-    def ConvertToTensors(self, filepathToClassDic, imageSize): # imageSize: (width, height)
-        imagesTensor = torch.FloatTensor(len(filepathToClassDic), 3, imageSize[1], imageSize[0]) # NCHW
-        labelsTensor = torch.LongTensor(len(filepathToClassDic), 1)
-
+    def Preprocessing(self, imageSize):
         preprocessing = torchvision.transforms.Compose([
             torchvision.transforms.Resize((imageSize[1], imageSize[0])),  # Resize expects (h, w)
             torchvision.transforms.ToTensor(),
             torchvision.transforms.Normalize((0.5, 0.5, 0.5), (0.2, 0.2, 0.2))
         ])
+        return preprocessing
+
+    def ConvertToTensors(self, filepathToClassDic, imageSize): # imageSize: (width, height)
+        imagesTensor = torch.FloatTensor(len(filepathToClassDic), 3, imageSize[1], imageSize[0]) # NCHW
+        labelsTensor = torch.LongTensor(len(filepathToClassDic), 1)
+
+        preprocessing = self.Preprocessing(imageSize)
         filepathNdx = 0
         for filepath in filepathToClassDic:
             pilImg = PIL.Image.open(filepath)

@@ -9,7 +9,7 @@ import Loader
 print('trainer.py')
 
 parser = argparse.ArgumentParser()
-parser.add_argument('baseDirectory', help='The directory containing the files train.json and validation.json')
+parser.add_argument('trainDirectory', help='The directory containing the class directories')
 parser.add_argument('--disable-cuda', action='store_true', help='Disable CUDA')
 parser.add_argument('--architecture', help='The neural network architecture (Default: ConvStack_3_3_32_7_2_32_7_2_32_7_2_12_256_0.5)', default='ConvStack_3_3_32_7_2_32_7_2_32_7_2_12_256_0.5')
 parser.add_argument('--restartWithNeuralNetwork', help='Restart the training with this neural network filename')
@@ -27,7 +27,7 @@ args.cuda = not args.disable_cuda and torch.cuda.is_available()
 
 imageSize = ast.literal_eval(args.imageSize)
 
-loader = Loader.Importer(args.baseDirectory, args.numberOfTrainingImages + args.numberOfValidationImages)
+loader = Loader.Importer(args.trainDirectory, args.numberOfTrainingImages + args.numberOfValidationImages)
 trainFilepathToClassDic, validationFilepathToClassDic = loader.SplitForTrainAndValidation(args.numberOfTrainingImages, args.numberOfValidationImages)
 trainFilepaths = [*trainFilepathToClassDic]
 validationFilepaths = [*validationFilepathToClassDic]
